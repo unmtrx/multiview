@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MultiView: Setup</title>
+    <style>
+        /* CSS for styling the popup */
+        .grid {
+            display: grid;
+            grid-gap: 2px;
+        }
+
+        .grid > div {
+            background-color: #64BD90;
+            border: none !important;
+            box-shadow: none;
+            outline: none;
+        }
+
+        button:hover {
+            background: #e9f8f1;
+        }
+
+        /* Opacity variations for the preview icons */
+        .grid > div:nth-child(1) { opacity: 1; }
+        .grid > div:nth-child(2) { opacity: 0.5; }
+        .grid > div:nth-child(3) { opacity: 0.8; }
+        .grid > div:nth-child(4) { opacity: 0.2; }
+
+        #twoFrames .grid {
+            grid-template-columns: 1fr 1fr;
+            height: 40px;
+        }
+
+        /* NEW: CSS for the 3-frame preview icon */
+        #threeFrames .grid {
+            height: 40px;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+        #threeFrames .grid div:first-child {
+            grid-column: span 2; /* Makes the top box full width */
+        }
+
+        #fourFrames .grid {
+            height: 40px;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .grid div {
+            border: 1px solid #888;
+        }
+
+        button {
+            margin: 5px;
+            padding: 5px;
+            cursor: pointer;
+            background: #fff;
+            width: 100px;
+        }
+
+        span {
+            flex-grow: 1;
+            display: block;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<div style="display: flex">
+    <button id="twoFrames">
+        <span>2 frames</span>
+        <div class="grid">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+        </div>
+    </button>
+
+    <button id="threeFrames">
+        <span>3 frames</span>
+        <div class="grid">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+        </div>
+    </button>
+
+    <button id="fourFrames">
+        <span>4 frames</span>
+        <div class="grid">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+        </div>
+    </button>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
