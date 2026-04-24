@@ -39,11 +39,11 @@ You can get this running in just a few clicks:
 - **Cross-Origin Scrollbar Hiding:** Uses a dedicated `content.js` script with `all_frames: true` permissions to inject CSS into embedded iframes, ensuring third-party scrollbars are hidden without disabling scroll functionality.
 - **Chrome Storage API:** Utilizes `chrome.storage.local` to independently save and retrieve URLs for index-based frames.
 
-## 🔒 Permissions
+##  Permissions
 
 - `storage`: Required to save the URLs you enter so they persist between sessions.
 - `<all_urls>` (Host Permission): Required to inject the scrollbar-hiding CSS into the websites you load inside the split-screen frames.
 
-## 📜 License
+##  License
 
 MIT License. Feel free to fork, modify, and use this code for your own projects!
