@@ -6,6 +6,9 @@
       "default_icon": "icon.png",
       "default_popup": "popup.html"
    },
+   "background": {
+      "service_worker": "bg.js"
+   },
    "content_scripts": [
       {
          "js": [ "content.js" ],
@@ -13,6 +16,15 @@
          "all_frames": true 
       }
    ],
+   "declarative_net_request": {
+      "rule_resources": [
+         {
+            "id": "frame_header_rules",
+            "enabled": true,
+            "path": "frame_header_rules.json"
+         }
+      ]
+   },
    "host_permissions": [
       "<all_urls>"
    ],
@@ -22,6 +34,9 @@
       "128": "icon_128.png"
    },
    "permissions": [
-      "storage"
+      "declarativeNetRequest",
+      "storage",
+      "tabs",
+      "webNavigation"
    ]
 }
