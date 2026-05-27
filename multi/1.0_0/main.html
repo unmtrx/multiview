@@ -3,66 +3,78 @@
 <head>
     <title>Multi-View</title>
     <style>
-        body, html {
+        :root {
+            --primary-color: #35d7ff;
+            --primary-hover: #7be8ff;
+            --danger-color: #ff5d73;
+            --surface-color: #0b1320;
+            --surface-elevated: #101b2d;
+            --background-color: #050a14;
+            --border-color: rgba(112, 214, 255, 0.18);
+            --text-primary: #f4f8ff;
+            --text-secondary: #91a7bf;
+            --border-radius: 8px;
+            --box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35),
+                          0 0 0 1px rgba(112, 214, 255, 0.05);
+        }
+
+        html,
+        body {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
-            overflow: hidden; /* ADD THIS: Prevents the main window from ever scrolling */
-            background-color: #000;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 15% -10%, rgba(53, 215, 255, 0.16), transparent 34%),
+                radial-gradient(circle at 90% 5%, rgba(124, 92, 255, 0.12), transparent 30%),
+                linear-gradient(180deg, #07101d 0%, var(--background-color) 100%);
+            color: var(--text-primary);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
-        /* Base Grid Settings */
         #container {
             display: grid;
             height: 100vh;
             width: 100vw;
-            gap: 1px;
+            gap: 0;
+            background: transparent;
         }
 
-        /* 2 Frames: 2 columns, 1 row */
         #container.grid-2 {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr;
         }
 
-        /* 3 Frames: 2 columns, 2 rows + T-shape logic */
         #container.grid-3 {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
         }
-        /* This makes the first iframe span both columns */
+
         #container.grid-3 > .iframe-container:first-child {
             grid-column: span 2;
         }
 
-        /* 4 Frames: 2 columns, 2 rows */
         #container.grid-4 {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
         }
 
-        /* 1. Target the iframe and hide bars for Firefox/IE */
         iframe {
             width: 100%;
             height: 100%;
-            background-color: #000000;
+            background-color: #050a14;
             z-index: 2;
             position: relative;
-            border: none; /* Removes the thin default border */
-
-            /* Hides scrollbar for Firefox */
-            scrollbar-width: none; 
-            /* Hides scrollbar for IE/Edge */
-            -ms-overflow-style: none; 
+            border: none;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
-        /* 2. Target Chrome, Edge, and Safari specifically to hide the 'button' */
         iframe::-webkit-scrollbar {
             display: none;
         }
 
-        /* 3. Ensure the container doesn't show its own scrollbars */
         .iframe-container {
             position: relative;
             display: flex;
@@ -70,49 +82,92 @@
             align-items: center;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Prevents the 'double scrollbar' effect */
+            overflow: hidden;
+            background:
+                linear-gradient(180deg, rgba(16, 27, 45, 0.96), rgba(9, 17, 30, 0.98));
         }
 
-        /* Styles for URL input form */
         .urlInputForm {
             display: none;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #4f0000b9;
-            border: 1px solid #00000000;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: min(720px, calc(100vw - 48px));
+            padding: 24px;
+            background: linear-gradient(180deg, rgba(16, 27, 45, 0.96), rgba(9, 17, 30, 0.98));
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
             z-index: 1000;
-            padding: 3vW;
-            border-radius: 11px;
-        }
-        .urlInputForm button {
-            font-size: 20px;
-            float: right;
-            margin-left: 10px;
-            border: none;
-            padding: 5px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            opacity: 0.8;
-            background: #ffffff;
-        }
-        .urlInputForm button:hover {
-            opacity: 1;
+            box-sizing: border-box;
         }
 
-        /* Styles for input field and button */
         .urlInput {
-            min-width: 50vW;
-            margin-bottom: 10px;
-            padding: 10px;
-            font-size: 20px;
-            background-color: #ffffff !important;
-            border: none;
+            width: 100%;
+            margin-bottom: 14px;
+            padding: 12px 14px;
+            box-sizing: border-box;
+            font-size: 18px;
+            background-color: rgba(5, 10, 20, 0.72);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
             outline: none;
         }
 
+        .urlInput::placeholder {
+            color: rgba(145, 167, 191, 0.72);
+        }
+
+        .urlInput:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(53, 215, 255, 0.14),
+                        0 0 26px rgba(53, 215, 255, 0.12);
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .urlInputForm button,
+        .iframe-url-button,
+        .url-set-button {
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+
+        .urlInputForm button {
+            float: right;
+            margin-left: 10px;
+            padding: 8px 14px;
+            border: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .urlInputForm button:hover {
+            border-color: rgba(123, 232, 255, 0.44);
+            background-color: rgba(53, 215, 255, 0.1);
+        }
+
+        #setUrlButton {
+            background: linear-gradient(135deg, var(--primary-color), #1788ff);
+            border: none;
+            color: #03111f;
+            box-shadow: 0 10px 24px rgba(53, 215, 255, 0.22);
+        }
+
+        #setUrlButton:hover {
+            background: linear-gradient(135deg, var(--primary-hover), #35d7ff);
+        }
+
+        #clearSetUrlButton:hover {
+            border-color: rgba(255, 93, 115, 0.5);
+            background-color: rgba(255, 93, 115, 0.12);
+        }
 
         .url-set-button {
             position: absolute;
@@ -121,74 +176,56 @@
             transform: translate(-50%, -50%);
             padding: 10px 20px;
             font-size: 16px;
-            cursor: pointer;
             z-index: 1;
         }
 
         .iframe-url-button {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 10px;
+            left: 10px;
             display: none;
-            padding: 5px;
+            padding: 7px 10px;
             font-size: 12px;
-            background-color: rgba(249, 249, 249, 0.7);
-            border: 1px solid #ffffff;
-            cursor: pointer;
+            background: rgba(5, 10, 20, 0.76);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
             z-index: 10;
-            font-weight: bold;
-            opacity: .6;
+            opacity: 0.24;
+            backdrop-filter: blur(12px);
         }
 
-        /* Show the button when hovering over the iframe container */
         .iframe-container:hover .iframe-url-button {
             display: block;
         }
-        .iframe-url-button:hover{
-            opacity: 1;
+
+        .iframe-url-button:hover {
+            opacity: 0.52;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 18px rgba(53, 215, 255, 0.24);
         }
 
-        #container.grid-3 > .iframe-container:first-child {
-          grid-column: span 2;
-        }
-        
-        .iframe-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Style for the button when iframe is not displayed */
         .iframe-container .iframe-url-button {
-            display: none; /* Initially hide the button */
+            display: none;
         }
 
-        /* Show the button only when the iframe is not displayed */
         .iframe-container iframe:not([src]),
         .iframe-container iframe[src=""] {
-            display: none; /* Hide the iframe if it has no src */
+            display: none;
         }
 
         .iframe-container iframe:not([src]) + .iframe-url-button,
         .iframe-container iframe[src=""] + .iframe-url-button {
-            display: block !important; /* Show the button */
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            z-index: 10;
-            left: calc(50% - 56px);
-            top: calc(50% - 20px);
+            display: block !important;
+            padding: 12px 18px;
+            font-size: 16px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--primary-color), #1788ff);
+            border: none;
+            color: #03111f;
+            box-shadow: 0 10px 24px rgba(53, 215, 255, 0.22);
         }
-
-        #setUrlButton {
-            color: rgb(59, 0, 0);
-            background: #ffffff;
-
-        }
-
     </style>
 </head>
 <body>
