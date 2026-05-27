@@ -3,42 +3,69 @@
 <head>
     <title>MultiView: Setup</title>
     <style>
-        /* CSS for styling the popup */
+        :root {
+            --primary-color: #35d7ff;
+            --primary-hover: #7be8ff;
+            --surface-elevated: #101b2d;
+            --background-color: #050a14;
+            --border-color: rgba(112, 214, 255, 0.18);
+            --text-primary: #f4f8ff;
+            --text-secondary: #91a7bf;
+            --border-radius: 8px;
+            --box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35),
+                          0 0 0 1px rgba(112, 214, 255, 0.05);
+        }
+
+        html,
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 15% -10%, rgba(53, 215, 255, 0.16), transparent 34%),
+                radial-gradient(circle at 90% 5%, rgba(124, 92, 255, 0.12), transparent 30%),
+                linear-gradient(180deg, #07101d 0%, var(--background-color) 100%);
+            color: var(--text-primary);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        body {
+            padding: 10px;
+        }
+
+        .layout-picker {
+            display: flex;
+            gap: 8px;
+        }
+
         .grid {
             display: grid;
             grid-gap: 2px;
         }
 
         .grid > div {
-            background-color: #64BD90;
-            border: none !important;
-            box-shadow: none;
+            background: linear-gradient(135deg, rgba(53, 215, 255, 0.9), rgba(23, 136, 255, 0.72));
+            border: 1px solid rgba(123, 232, 255, 0.32);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
             outline: none;
         }
 
-        button:hover {
-            background: #e9f8f1;
-        }
-
-        /* Opacity variations for the preview icons */
         .grid > div:nth-child(1) { opacity: 1; }
-        .grid > div:nth-child(2) { opacity: 0.5; }
+        .grid > div:nth-child(2) { opacity: 0.55; }
         .grid > div:nth-child(3) { opacity: 0.8; }
-        .grid > div:nth-child(4) { opacity: 0.2; }
+        .grid > div:nth-child(4) { opacity: 0.35; }
 
         #twoFrames .grid {
             grid-template-columns: 1fr 1fr;
             height: 40px;
         }
 
-        /* NEW: CSS for the 3-frame preview icon */
         #threeFrames .grid {
             height: 40px;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
         }
+
         #threeFrames .grid div:first-child {
-            grid-column: span 2; /* Makes the top box full width */
+            grid-column: span 2;
         }
 
         #fourFrames .grid {
@@ -47,27 +74,42 @@
             grid-template-rows: 1fr 1fr;
         }
 
-        .grid div {
-            border: 1px solid #888;
+        button {
+            width: 104px;
+            margin: 0;
+            padding: 8px;
+            cursor: pointer;
+            background: linear-gradient(180deg, rgba(16, 27, 45, 0.96), rgba(9, 17, 30, 0.98));
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            color: var(--text-primary);
+            font: 700 12px/1.2 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            letter-spacing: 0;
         }
 
-        button {
-            margin: 5px;
-            padding: 5px;
-            cursor: pointer;
-            background: #fff;
-            width: 100px;
+        button:hover,
+        button:focus {
+            background: linear-gradient(180deg, rgba(21, 39, 64, 0.98), rgba(10, 23, 42, 0.98));
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 24px rgba(53, 215, 255, 0.22);
+            outline: none;
         }
 
         span {
-            flex-grow: 1;
             display: block;
-            padding-bottom: 5px;
+            padding-bottom: 7px;
+            color: var(--text-secondary);
+        }
+
+        button:hover span,
+        button:focus span {
+            color: var(--primary-hover);
         }
     </style>
 </head>
 <body>
-<div style="display: flex">
+<div class="layout-picker">
     <button id="twoFrames">
         <span>2 frames</span>
         <div class="grid">
